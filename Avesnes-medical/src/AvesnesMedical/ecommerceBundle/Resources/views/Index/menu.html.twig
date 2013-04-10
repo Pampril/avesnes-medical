@@ -1,0 +1,13 @@
+<nav class="navbar navbar-static-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <ul class="nav">
+                <li><a href="{{ path('Accueil') }}"><i class="icon-home"></i> Accueil</a></li>
+                {% for uneCategorie in categorie %}
+                    <li><a href="{{ path('produitsCategorie', { 'id': uneCategorie.id }) }}">{{ uneCategorie.nom }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</nav>
+

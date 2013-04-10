@@ -1,0 +1,54 @@
+{% extends "AvesnesMedicalecommerceBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} Produit numéro :{{ produit.id }} {% endblock %}
+{% block body %}
+    <table class="table table-bordered table-striped table-condensed">
+        <caption>
+            <h1>Produit n°{{ produit.id }} </h1>
+        </caption>
+        <thead>
+        <tr>
+            <th> Designation </th>
+            <th> ACL </th>
+            <th> EAN </th>
+            <th> Qté </th>
+            <th> Prix </th>
+            <th> Description </th>
+            <th> Photo du produit </th>
+            <th>  Statut </th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td> {{ produit.nom }}</td>
+                <td>{{ produit.acl }}</td>
+                <td>{{ produit.ean }}</td>
+                <td>{{ produit.quantite }}</td>
+                <td>{{ produit.prix }} €</td>
+                <td>{{ produit.description }}</td>
+                <td>{# On vérifie qu'une image soit bien associée au produit #}
+                    {% if produit.photo is not null %}
+                        <img src="{{ asset('img/photosuploads/documents/'~ produit.photo.path)}}" alt="{{ produit.photo.nom }}" width="128" height="128" />
+                    {% endif %}
+                </td>
+                {% if produit.statut == 1 %}
+                    <td>En stock</td>
+                {% else %}
+                    <td> En rupture de stock</td>
+                {% endif %}
+            </tr>
+        </tbody>
+    </table>
+
+    <p><a class="btn btn-primary btn-large"
+          href="{{ path('ModifierProduit', { 'id': produit.id }) }}">
+        Modifier »
+    </a></p>
+
+    <p><a class="btn btn-primary btn-large"
+          href="{{ path('SupprimerProduit', { 'id': produit.id }) }}">
+        Supprimer »
+    </a></p>
+
+
+{% endblock %}
