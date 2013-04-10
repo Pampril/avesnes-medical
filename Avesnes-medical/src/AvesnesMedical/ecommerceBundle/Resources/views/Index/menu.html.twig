@@ -6,6 +6,7 @@
                 {% for uneCategorie in categorie %}
                     <li><a href="{{ path('produitsCategorie', { 'id': uneCategorie.id }) }}">{{ uneCategorie.nom }}</a></li>
                 {% endfor %}
+                <li><a href="{{ path('Inscription') }}"><i class="icon-plus"></i>Inscription</a></li>
             </ul>
         </div>
     </div>

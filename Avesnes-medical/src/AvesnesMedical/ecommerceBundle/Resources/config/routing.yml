@@ -61,3 +61,15 @@ produitsCategorie:
     defaults: { _controller: AvesnesMedicalecommerceBundle:Categorie:produitscategorie }
     requirements:
       id: \d+
+
+Commande:
+    pattern: /commande
+    defaults: { _controller: AvesnesMedicalecommerceBundle:Commande:index }
+
+Client:
+    pattern: /client
+    defaults: { _controller: AvesnesMedicalecommerceBundle:Client:index }
+
+Inscription:
+    pattern: /inscription
+    defaults: { _controller: AvesnesMedicalecommerceBundle:Client:inscription }
