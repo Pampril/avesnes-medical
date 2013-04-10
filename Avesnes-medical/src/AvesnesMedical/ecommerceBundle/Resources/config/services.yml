@@ -1,0 +1,7 @@
+parameters:
+#    avesnes_medicalecommerce.example.class: AvesnesMedical\ecommerceBundle\Example
+
+services:
+#    avesnes_medicalecommerce.example:
+#        class: %avesnes_medicalecommerce.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

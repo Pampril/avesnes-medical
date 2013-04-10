@@ -1,0 +1,63 @@
+Accueil:
+    pattern: /index
+    defaults: { _controller: AvesnesMedicalecommerceBundle:Index:index }
+
+
+Produits:
+    pattern: /produits/{page}
+    defaults: { _controller: AvesnesMedicalecommerceBundle:Produit:index, page: 1 }
+
+
+AfficherProduit:
+    pattern: /afficherproduit/{id}
+    defaults: { _controller: AvesnesMedicalecommerceBundle:Produit:afficher }
+    requirements:
+      id: \d+
+
+AjouterProduit:
+    pattern: /ajouterproduit
+    defaults: { _controller: AvesnesMedicalecommerceBundle:Produit:ajouter }
+
+ModifierProduit:
+    pattern: /modifierproduit/{id}
+    defaults: { _controller: AvesnesMedicalecommerceBundle:Produit:modifier }
+    requirements:
+      id: \d+
+
+SupprimerProduit:
+    pattern: /supprimerproduit/{id}
+    defaults: { _controller: AvesnesMedicalecommerceBundle:Produit:supprimer }
+    requirements:
+      id: \d+
+
+Categories:
+    pattern: /categories{page}
+    defaults: { _controller: AvesnesMedicalecommerceBundle:Categorie:index, page: 1 }
+
+AfficherCategorie:
+    pattern: /affichercategorie/{id}
+    defaults: { _controller: AvesnesMedicalecommerceBundle:Categorie:afficher }
+    requirements:
+      id: \d+
+
+AjouterCategorie:
+    pattern: /ajoutercategorie
+    defaults: { _controller: AvesnesMedicalecommerceBundle:Categorie:ajouter }
+
+ModifierCategorie:
+    pattern: /modifiercategorie/{id}
+    defaults: { _controller: AvesnesMedicalecommerceBundle:Categorie:modifier }
+    requirements:
+      id: \d+
+
+SupprimerCategorie:
+    pattern: /supprimercategorie{id}
+    defaults: { _controller: AvesnesMedicalecommerceBundle:Categorie:supprimer }
+    requirements:
+      id: \d+
+
+produitsCategorie:
+    pattern: /produitscategorie/{id}
+    defaults: { _controller: AvesnesMedicalecommerceBundle:Categorie:produitscategorie }
+    requirements:
+      id: \d+
