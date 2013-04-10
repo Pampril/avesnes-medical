@@ -1,0 +1,36 @@
+{% extends "AvesnesMedicalecommerceBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} {{ categorie.nom }} {% endblock %}
+{% block body %}
+    <table class="table table-bordered table-striped table-condensed">
+        <caption>
+            <h1>Produits pour la catégorie {{ categorie.nom }}  </h1>
+        </caption>
+        <thead>
+            <tr>
+                <th> Designation,</th>
+                <th> Description </th>
+                <th> Prix </th>
+                <th> Photo du produit</th>
+                <th> </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for unProduit in produit  %}
+                 <tr>
+                   <td>{{ unProduit.nom }}</td>
+                   <td>{{ unProduit.description }}</td>
+                   <td>{{ unProduit.prix }} €</td>
+                   <td>{# On vérifie qu'une image soit bien associée au produit #}
+                       {% if unProduit.photo is not null %}
+                           <img src="{{ asset('img/photosuploads/documents/'~ unProduit.photo.path)}}" alt="{{ unProduit.photo.nom }}" width="130" height="130" />
+                       {% endif %}
+                   </td>
+                   <td>
+                       <a class="btn btn-primary btn-large" href="{{ path('ModifierCategorie', { 'id': categorie.id }) }}"> Ajouter au panier </a>
+                   </td>
+            {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}
