@@ -24,14 +24,9 @@ class ProduitRepository extends EntityRepository
         }
         // La construction de la requête reste inchangée
         $query = $this->createQueryBuilder('p')
-//              ->leftJoin('p.photo', 'i')
-//              ->addSelect('i')
             ->leftJoin('p.categorie', 'cat')
             ->addSelect('cat')
-            //->leftJoin('p.photo', 'p')
-            //->addSelect('p')
-//            ->orderBy('a.date', 'DESC')
-              ->getQuery();
+            ->getQuery();
         // On définit l'article à partir duquel commencer la liste
         $query->setFirstResult(($page-1) * $nombreParPage)
         // Ainsi que le nombre d'articles à afficher
@@ -41,16 +36,19 @@ class ProduitRepository extends EntityRepository
         return new Paginator($query);
     }
 
-    public function getProduitsAvecCategorie($id_categories)
+    public function getProduitsAvecCategorie($id_categories, $nombreParPage, $page)
     {
-        $qb = $this->createQueryBuilder('p');
+        $query = $this->createQueryBuilder('p');
         // On fait une jointure avec l'entité Categorie, avec pour alias « c »
-        $qb ->join('p.categorie', 'c')
-            ->where($qb->expr()->in('c.id', $id_categories)); // Puis on filtre sur l'id des catégories à l'aide d'un IN
+        $query  ->join('p.categorie', 'c')
+                ->where($query->expr()->in('c.id', $id_categories)) // Puis on filtre sur l'id des catégories à l'aide d'un IN
+                ->getQuery()->getResult();
 
-
-        // Enfin, on retourne le résultat
-        return $qb->getQuery()
-            ->getResult();
+        $query->setFirstResult(($page-1) * $nombreParPage)
+        // Ainsi que le nombre d'articles à afficher
+            ->setMaxResults($nombreParPage);
+        // Enfin, on retourne l'objet Paginator correspondant à la requête construite
+        // (n'oubliez pas le use correspondant en début de fichier)
+        return new Paginator($query);
     }
 }

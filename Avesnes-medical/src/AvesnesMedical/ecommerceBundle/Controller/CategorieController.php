@@ -142,7 +142,7 @@ class CategorieController extends Controller
         return $this->render('AvesnesMedicalecommerceBundle:Index:index.html.twig',array('categorie' => $categorie));
     }
 
-    public function produitscategorieAction($id)
+    public function produitscategorieAction($id, $page)
     {
         $categorie = new Categorie();
 
@@ -154,7 +154,7 @@ class CategorieController extends Controller
         $produit = $this->getDoctrine()
             ->getEntityManager()
             ->getRepository('AvesnesMedical\ecommerceBundle\Entity\Produit')
-            ->getProduitsAvecCategorie($id);
+            ->getProduitsAvecCategorie($id, 10, $page);
 
         if($produit == null)
         {
@@ -163,8 +163,8 @@ class CategorieController extends Controller
 
         //renvoi l'id passé en paramétre à la vue
         return $this->render('AvesnesMedicalecommerceBundle:Categorie:produitscategorie.html.twig',
-            array( 'produit' => $produit, 'categorie' => $categorie));
-
+            array( 'produit' => $produit, 'categorie' => $categorie, 'page'
+            => $page,'nombrePage' => ceil(count($categorie)/5 )));
 
 
     }
