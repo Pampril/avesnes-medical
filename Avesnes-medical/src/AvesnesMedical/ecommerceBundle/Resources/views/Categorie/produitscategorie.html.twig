@@ -8,8 +8,7 @@
         </caption>
         <thead>
             <tr>
-                <th> Designation,</th>
-                <th> Description </th>
+                <th> Designation</th>
                 <th> Prix </th>
                 <th> Photo du produit</th>
                 <th> </th>
@@ -18,8 +17,9 @@
         <tbody>
             {% for unProduit in produit  %}
                  <tr>
-                   <td>{{ unProduit.nom }}</td>
-                   <td>{{ unProduit.description }}</td>
+                   <td>
+                       <a href="{{ path('AfficherProduit', { 'id': unProduit.id }) }}">{{ unProduit.nom }}</a>
+                   </td>
                    <td>{{ unProduit.prix }} €</td>
                    <td>{# On vérifie qu'une image soit bien associée au produit #}
                        {% if unProduit.photo is not null %}
@@ -27,10 +27,23 @@
                        {% endif %}
                    </td>
                    <td>
-                       <a class="btn btn-primary btn-large" href="{{ path('ModifierCategorie', { 'id': categorie.id }) }}"> Ajouter au panier </a>
+                       {#<a class="btn btn-primary btn-large" href="{{ path('ModifierCategorie', { 'id': categorie.id }) }}"> Ajouter au panier </a>#}
                    </td>
             {% endfor %}
             </tr>
         </tbody>
     </table>
+
+    <div class="pagination">
+        <ul>
+            {# On utilise la fonction range(a, b) qui crée un tableau de
+            valeurs entre a et b #}
+            {% for p in range(1, nombrePage) %}
+                <li{% if p == page %} class="active"{% endif %}>
+                    <a href="{{ path('produitsCategorie', {'id': categorie.id},{'page': p}) }}">{{ p
+                    }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}

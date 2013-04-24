@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Commande
 {
     /**
-     * @ORM\ManyToOne(targetEntity="AvesnesMedical\ecommerceBundle\Entity\Client")
+     * @ORM\ManyToOne(targetEntity="AvesnesMedical\UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
     private $client;

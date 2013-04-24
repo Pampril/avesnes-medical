@@ -10,9 +10,14 @@ use AvesnesMedical\ecommerceBundle\Entity\Categorie;
 use AvesnesMedical\ecommerceBundle\Form\CategorieType;
 //declaration du chemin de la classe Produit
 use AvesnesMedical\ecommerceBundle\Entity\Produit;
+//Permet de gérer les droits utilisateurs
+use JMS\SecurityExtraBundle\Annotation\Secure;
 
 class CategorieController extends Controller
 {
+    /**
+     * @Secure(roles="ROLE_GERANT")
+     */
     public function indexAction($page)
     {
         $categorie = $this->getDoctrine()
@@ -29,6 +34,9 @@ class CategorieController extends Controller
         => $page,'nombrePage' => ceil(count($categorie)/5 )));
     }
 
+    /**
+     * @Secure(roles="ROLE_GERANT")
+     */
     public function afficherAction($id)
     {
         // On récupère le repository
@@ -49,6 +57,9 @@ class CategorieController extends Controller
     }
 
 
+    /**
+     * @Secure(roles="ROLE_GERANT")
+     */
     public function ajouterAction()
     {
         // Création de l'entité
@@ -84,6 +95,9 @@ class CategorieController extends Controller
         return $this->render('AvesnesMedicalecommerceBundle:Categorie:ajouter.html.twig',array('form' => $form->createView()));
     }
 
+    /**
+     * @Secure(roles="ROLE_GERANT")
+     */
     public function modifierAction($id)
     {
         // Création de l'entité
@@ -122,6 +136,9 @@ class CategorieController extends Controller
         return $this->render('AvesnesMedicalecommerceBundle:Categorie:modifier.html.twig',array('form' => $form->createView()));
     }
 
+    /**
+     * @Secure(roles="ROLE_GERANT")
+     */
     public function supprimerAction($id)
     {
         // Création de l'entité
@@ -165,7 +182,5 @@ class CategorieController extends Controller
         return $this->render('AvesnesMedicalecommerceBundle:Categorie:produitscategorie.html.twig',
             array( 'produit' => $produit, 'categorie' => $categorie, 'page'
             => $page,'nombrePage' => ceil(count($categorie)/5 )));
-
-
     }
 }

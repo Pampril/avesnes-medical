@@ -25,4 +25,9 @@ class IndexController extends Controller
 
         return $this->render('AvesnesMedicalecommerceBundle:Index:menu.html.twig', array('categorie' => $categorie));
     }
+
+    public function connexionAction()
+    {
+        return $this->render('AvesnesMedicalecommerceBundle:Index:connexion.html.twig');
+    }
 }

@@ -57,8 +57,8 @@ SupprimerCategorie:
       id: \d+
 
 produitsCategorie:
-    pattern: /produitscategorie/{id}
-    defaults: { _controller: AvesnesMedicalecommerceBundle:Categorie:produitscategorie }
+    pattern: /produitscategorie/{id}/{page}
+    defaults: { _controller: AvesnesMedicalecommerceBundle:Categorie:produitscategorie, page:1 }
     requirements:
       id: \d+
 

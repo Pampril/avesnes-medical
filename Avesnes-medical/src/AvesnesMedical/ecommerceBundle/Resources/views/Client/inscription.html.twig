@@ -3,8 +3,78 @@
 {% block body %}
     <div class="well">
         <form method="post" {{ form_enctype(form) }}>
-            {{ form_widget(form) }}
+            <!-- Les erreurs générales du formulaire. -->
+            {{ form_errors(form) }}
+            <div>
+                <!-- Génération du label. -->
+                {{ form_label(form.nom, "Nom") }}
+                <!-- Affichage des erreurs pour ce champ précis. -->
+                {{ form_errors(form.nom) }}
+                <!-- Génération de l'input. -->
+                {{ form_widget(form.nom) }}
+            </div>
+            <div>
+                <!-- Génération du label. -->
+                {{ form_label(form.prenom, "Prénom") }}
+                <!-- Affichage des erreurs pour ce champ précis. -->
+                {{ form_errors(form.prenom) }}
+                <!-- Génération de l'input. -->
+                {{ form_widget(form.prenom) }}
+            </div>
+            <div>
+                <!-- Génération du label. -->
+                {{ form_label(form.rue, "Rue") }}
+                <!-- Affichage des erreurs pour ce champ précis. -->
+                {{ form_errors(form.rue) }}
+                <!-- Génération de l'input. -->
+                {{ form_widget(form.rue) }}
+            </div>
+            <div>
+                <!-- Génération du label. -->
+                {{ form_label(form.ville, "Ville") }}
+                <!-- Affichage des erreurs pour ce champ précis. -->
+                {{ form_errors(form.ville) }}
+                <!-- Génération de l'input. -->
+                {{ form_widget(form.ville) }}
+            </div>
+            <div>
+                <!-- Génération du label. -->
+                {{ form_label(form.codePostal, "Code Postale") }}
+                <!-- Affichage des erreurs pour ce champ précis. -->
+                {{ form_errors(form.codePostal) }}
+                <!-- Génération de l'input. -->
+                {{ form_widget(form.codePostal) }}
+            </div>
+            <div>
+                <!-- Génération du label. -->
+                {{ form_label(form.mail, "Adresse E-mail") }}
+                <!-- Affichage des erreurs pour ce champ précis. -->
+                {{ form_errors(form.mail) }}
+                <!-- Génération de l'input. -->
+                {{ form_widget(form.mail) }}
+            </div>
+            <div>
+                <!-- Génération du label. -->
+                {{ form_label(form.telFixe, "Numero de téléphone fixe") }}
+                <!-- Affichage des erreurs pour ce champ précis. -->
+                {{ form_errors(form.telFixe) }}
+                <!-- Génération de l'input. -->
+                {{ form_widget(form.telFixe) }}
+            </div>
+            <div>
+                <!-- Génération du label. -->
+                {{ form_label(form.telMobile, "Numero de téléphone mobile") }}
+                <!-- Affichage des erreurs pour ce champ précis. -->
+                {{ form_errors(form.telMobile) }}
+                <!-- Génération de l'input. -->
+                {{ form_widget(form.telMobile) }}
+            </div>
+
+            <h1>Ajouter le champ Mot de Passe</h1>
+            {{ form_rest(form) }}
+
             <input type="submit" class="btn btn-success" />
+
         </form>
     </div>
 {% endblock %}

@@ -17,23 +17,39 @@
             {% render "AvesnesMedicalecommerceBundle:Index:menu" %}
         </div>
     </div>
+
+    {#Connexion#}
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        Connecté en tant que {{ app.user.username }} - <a href="{{
+    path('fos_user_security_logout') }}">Déconnexion</a>
+    {% else %}
+        <a href="{{ path('fos_user_security_login') }}">Connexion</a> |
+        <a href="{{ path('fos_user_registration_register') }}"><i class="icon-plus"></i>Inscription</a>
+    {% endif %}
+    {#**********#}
+
+
     <div class="row">
-        <div id="menu2" class="span3">
-            <h2>Menu Admin</h2>
-            <ul class="nav nav-pills nav-stacked">
-                <li><a href= "{{ path('Accueil') }}"><i class="icon-home"></i> Accueil</a></li>
-                <li><a href="{{ path('Produits') }}"><i class="icon-list"></i>Liste des produits</a></li>
-                <li><a href="{{ path('AjouterProduit') }}"><i class="icon-plus"></i>Ajouter un produit</a></li>
-                <li><a href="{{ path('Categories') }}"><i class="icon-list"></i>Liste des catégories</a></li>
-                <li><a href="{{ path('AjouterCategorie') }}"><i class="icon-plus"></i>Ajouter une catégorie</a></li>
-            </ul>
-        </div>
+        {#permet d'afficher le menu uniquemment pour l'admin#}
+        {% if is_granted('ROLE_GERANT') %}
+            <div id="menu2" class="span3">
+                <h2>Menu Admin</h2>
+                <ul class="nav nav-pills nav-stacked">
+                    <li><a href= "{{ path('Accueil') }}"><i class="icon-home"></i> Accueil</a></li>
+                    <li><a href="{{ path('Produits') }}"><i class="icon-list"></i>Liste des produits</a></li>
+                    <li><a href="{{ path('AjouterProduit') }}"><i class="icon-plus"></i>Ajouter un produit</a></li>
+                    <li><a href="{{ path('Categories') }}"><i class="icon-list"></i>Liste des catégories</a></li>
+                    <li><a href="{{ path('AjouterCategorie') }}"><i class="icon-plus"></i>Ajouter une catégorie</a></li>
+                </ul>
+            </div>
+        {% endif %}
 
         <div id="content" class="span9">
             {% block body %}
             {% endblock %}
         </div>
     </div>
+
     <hr>
     <footer>
         <p>Avesnes-Medical © 2013</p>

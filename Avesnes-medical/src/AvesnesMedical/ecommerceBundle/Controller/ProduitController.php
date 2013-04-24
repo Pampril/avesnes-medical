@@ -12,11 +12,16 @@ use AvesnesMedical\ecommerceBundle\Form\ProduitType;
 use AvesnesMedical\ecommerceBundle\Entity\Categorie;
 //declaration du chemin du formulaire CategorieType
 use AvesnesMedical\ecommerceBundle\Form\CategorieType;
-
+//Permet de gérer les droits utilisateurs
+use JMS\SecurityExtraBundle\Annotation\Secure;
 
 
 class ProduitController extends Controller
 {
+    /**
+     * @Secure(roles="ROLE_GERANT")
+     */
+
     public function indexAction($page)
     {
         // On récupère le repository de produit
@@ -24,10 +29,6 @@ class ProduitController extends Controller
             ->getManager()
             ->getRepository('AvesnesMedicalecommerceBundle:Produit')
             ->getProduits(10, $page); // 3 articles par page
-
-
-        // On récupère l'entité correspondant à l'id $id
-      //  $produit = $repository->findAll();
 
         if($produit === null)
         {
@@ -58,6 +59,10 @@ class ProduitController extends Controller
         return $this->render('AvesnesMedicalecommerceBundle:Produit:afficher.html.twig', array('produit' => $produit));
     }
 
+    /**
+     * @Secure(roles="ROLE_GERANT")
+     */
+
     public function ajouterAction()
     {
         // Création de l'entité produit
@@ -87,11 +92,13 @@ class ProduitController extends Controller
 
             }
         }
-
         //ajout d'un produit
         return $this->render('AvesnesMedicalecommerceBundle:Produit:ajouter.html.twig',array('form' => $form->createView()));
     }
 
+    /**
+     * @Secure(roles="ROLE_GERANT")
+     */
     public function modifierAction($id)
     {
         // Création de l'entité
@@ -130,6 +137,9 @@ class ProduitController extends Controller
         return $this->render('AvesnesMedicalecommerceBundle:Produit:modifier.html.twig',array('form' => $form->createView()));
     }
 
+    /**
+     * @Secure(roles="ROLE_GERANT")
+     */
     public function supprimerAction($id)
     {
         // Création de l'entité

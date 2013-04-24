@@ -3,12 +3,17 @@
 namespace AvesnesMedical\ecommerceBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+//Declaration des annotations pour la validation des données
+use Symfony\Component\Validator\Constraints as Assert;
+//Permet de vérifier si le champ existe déjà en base
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Categorie
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AvesnesMedical\ecommerceBundle\Entity\CategorieRepository")
+ * @UniqueEntity(fields="nom", message="Cette catégorie existe déjà")
  */
 class Categorie
 {
@@ -26,6 +31,8 @@ class Categorie
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=255)
+     * @Assert\NotBlank(message="Le nom ne peut pas être vide")
+     * @Assert\MinLength(limit=3)
      */
     private $nom;
 
@@ -33,6 +40,7 @@ class Categorie
      * @var string
      *
      * @ORM\Column(name="description", type="text")
+     * @Assert\MinLength(limit=5)
      */
     private $description;
 

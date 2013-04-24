@@ -40,15 +40,18 @@
         </tbody>
     </table>
 
-    <p><a class="btn btn-primary btn-large"
-          href="{{ path('ModifierProduit', { 'id': produit.id }) }}">
-        Modifier »
-    </a></p>
+    {% if is_granted('ROLE_GERANT') %}
+        <p><a class="btn btn-primary btn-large"
+              href="{{ path('ModifierProduit', { 'id': produit.id }) }}">
+            Modifier »
+        </a></p>
 
-    <p><a class="btn btn-primary btn-large"
-          href="{{ path('SupprimerProduit', { 'id': produit.id }) }}">
-        Supprimer »
-    </a></p>
-
+        <p><a class="btn btn-primary btn-large"
+              href="{{ path('SupprimerProduit', { 'id': produit.id }) }}">
+            Supprimer »
+        </a></p>
+        {% else %}
+            <h1>Faire ajout panier</h1>
+    {% endif %}
 
 {% endblock %}
