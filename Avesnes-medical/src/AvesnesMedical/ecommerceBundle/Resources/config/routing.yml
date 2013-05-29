@@ -73,3 +73,18 @@ Client:
 Inscription:
     pattern: /inscription
     defaults: { _controller: AvesnesMedicalecommerceBundle:Client:inscription }
+
+Panier:
+    pattern: /panier
+    defaults: { _controller: AvesnesMedicalecommerceBundle:Panier:index }
+
+AjoutPanier:
+    pattern: /ajoutpanier/{id}
+    defaults: { _controller: AvesnesMedicalecommerceBundle:Panier:ajouter }
+    requirements:
+      id: \d+
+
+ViderPanier:
+    pattern: /viderpanier
+    defaults: { _controller: AvesnesMedicalecommerceBundle:Panier:vider }
+

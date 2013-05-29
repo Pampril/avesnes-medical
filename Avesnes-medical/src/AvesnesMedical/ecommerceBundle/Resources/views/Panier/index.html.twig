@@ -1,0 +1,33 @@
+{% extends "AvesnesMedicalecommerceBundle::layout.html.twig" %}
+{% block title %}{{ parent() }}  Panier {% endblock %}
+{% block body %}
+    <h1>Panier</h1>
+
+   {% if panier is defined %}
+       <table class="table table-bordered table-striped table-condensed">
+           <tr>
+               <th> Produit(s)</th>
+               <th> Prix unitaire </th>
+               <th> Quantite</th>
+               <th> Prix total </th>
+               <th> Supprimer</th>
+           </tr>
+
+           <tr>
+               <td> {{ panier['nom'] }}</td>
+               <td> {{ panier['prix'] }}€</td>
+               <td> {{ panier['quantite'] }}</td>
+               <td> {{ panier['prixtotal'] }}€</td>
+               <td> (/!\) </td>
+           </tr>
+
+           <tr>
+               <td>
+                   <a class="btn btn-primary btn-large" href="{{ path('ViderPanier')}}"> Vider le panier </a>
+               </td>
+           </tr>
+       </table>
+     {% else %}
+        Votre panier est vide
+    {% endif %}
+{% endblock %}

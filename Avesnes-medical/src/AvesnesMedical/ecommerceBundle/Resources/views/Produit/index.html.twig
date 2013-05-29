@@ -7,6 +7,8 @@
     {% for unProduit in produit %}
 
             <a href="{{ path('AfficherProduit', { 'id': unProduit.id }) }}">Produit n°: {{ unProduit.id }}</a><br>
+            Nom : {{ unProduit.nom }}<br>
+            EAN : {{ unProduit.ean }}<br>
 
     {% endfor %}
 
