@@ -2,6 +2,12 @@
 
 {% block title %}{{ parent() }} - Page des produits{% endblock %}
 {% block body %}
+
+    <form id="form_recherche" action="{{ path('RechercheProduit') }}" method="POST">
+        {{ form_widget(form) }}
+        <input type="submit" value="Go !" />
+    </form>
+
     <h1>Liste des produits :</h1>
     {#exemple boucle for#}
     {% for unProduit in produit %}
@@ -24,6 +30,8 @@
             {% endfor %}
         </ul>
     </div>
+
+
 
 
 {% endblock %}

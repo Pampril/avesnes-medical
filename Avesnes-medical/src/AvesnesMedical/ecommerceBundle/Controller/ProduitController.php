@@ -12,6 +12,8 @@ use AvesnesMedical\ecommerceBundle\Form\ProduitType;
 use AvesnesMedical\ecommerceBundle\Entity\Categorie;
 //declaration du chemin du formulaire CategorieType
 use AvesnesMedical\ecommerceBundle\Form\CategorieType;
+//declaration du chemin du formulaire RechercheType
+use AvesnesMedical\ecommerceBundle\Form\RechercheType;
 //Permet de gérer les droits utilisateurs
 use JMS\SecurityExtraBundle\Annotation\Secure;
 
@@ -30,13 +32,15 @@ class ProduitController extends Controller
             ->getRepository('AvesnesMedicalecommerceBundle:Produit')
             ->getProduits(10, $page); // 3 articles par page
 
+        $form = $this->container->get('form.factory')->create(new RechercheType());
+
         if($produit === null)
         {
             echo 'Ce produit n\'éxiste pas';
         }
 
-        return $this->render('AvesnesMedicalecommerceBundle:Produit:index.html.twig', array('produit' => $produit, 'page'
-        => $page,'nombrePage' => ceil(count($produit)/5 )));
+        return $this->render('AvesnesMedicalecommerceBundle:Produit:index.html.twig', array('produit' => $produit, 'form' => $form->createView(), 'page'
+        => $page,'nombrePage' => ceil(count($produit)/5)));
     }
 
     public function afficherAction($id)
@@ -78,7 +82,7 @@ class ProduitController extends Controller
         if ($request->getMethod() == 'POST')
         {
             // On fait le lien Requête <-> Formulaire
-            // A partir de maintenant, la variable $produit contient les valeurs entrées dans le formulaire par le visiteur
+            // A partir de maintenant,la variable $produit contient les valeurs entrées dans le formulaire par le visiteur
             $form->bind($request);
 
             //On vérifie que les valeurs rentrées sont correctes
@@ -129,7 +133,6 @@ class ProduitController extends Controller
                 $em->persist($produit);
                 $em->flush();
                 return $this->render('AvesnesMedicalecommerceBundle:Produit:afficher.html.twig',array('produit' => $produit));
-
             }
         }
 
@@ -149,7 +152,8 @@ class ProduitController extends Controller
             ->getRepository('AvesnesMedical\ecommerceBundle\Entity\Produit')
             ->find($id);
 
-        if (!$produit) {
+        if (!$produit)
+        {
             throw $this->createNotFoundException('Produit non trouvé avec id '.$id);
         }
 
@@ -158,5 +162,56 @@ class ProduitController extends Controller
         $em->remove($produit);
         $em->flush();
         return $this->render('AvesnesMedicalecommerceBundle:Index:index.html.twig',array('produit' => $produit));
+    }
+
+    public function rechercheAction()
+    {
+        $produit = new Produit();
+
+        $request = $this->container->get('request');
+
+
+        if($request->getMethod() == 'POST')
+        {
+            $em = $this->container->get('doctrine')->getEntityManager();
+
+            echo'rentre 1';
+
+            $motcle = '';
+            $motcle = $this->getRequest()->request->get('produitrecherche');
+
+
+
+            echo $motcle['motcle'];
+
+            if($motcle['motcle'] != '')
+            {
+                echo'rentre 2';
+                $qb = $em->createQueryBuilder();
+
+                $qb ->select('p')
+                    ->from('AvesnesMedicalecommerceBundle:Produit', 'p')
+                    ->where("p.nom LIKE :motcle OR p.acl LIKE :motcle OR p.ean LIKE :motcle")
+                    ->orderBy('p.nom', 'ASC')
+                    ->setParameter('motcle', '%'.$motcle['motcle'].'%');
+
+                $query = $qb->getQuery();
+                $produit = $query->getResult();
+            }
+            else
+            {
+                echo'rentre 3';
+                $produit = $em->getRepository('AvesnesMedicalecommerceBundle:Produit')->findAll();
+            }
+//            \Doctrine\Common\Util\Debug::dump($produit);
+            return $this->render('AvesnesMedicalecommerceBundle:Produit:recherche.html.twig',
+                array('produit' => $produit));
+        }
+        else
+        {
+            echo'rentre 4';
+            $page = 1;
+            return $this->indexAction($page);
+        }
     }
 }
