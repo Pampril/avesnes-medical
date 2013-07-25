@@ -7,6 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AvesnesMedical\ecommerceBundle\Entity\Categorie;
 //declaration du chemin du formulaire CategorieType
 use AvesnesMedical\ecommerceBundle\Form\CategorieType;
+//declaration du chemin du formulaire RechercheType
+use AvesnesMedical\ecommerceBundle\Form\RechercheType;
 
 class IndexController extends Controller
 {
@@ -22,12 +24,15 @@ class IndexController extends Controller
             ->getRepository('AvesnesMedicalecommerceBundle:Categorie')
             ->findAll();
 
+        $form = $this->container->get('form.factory')->create(new RechercheType());
 
-        return $this->render('AvesnesMedicalecommerceBundle:Index:menu.html.twig', array('categorie' => $categorie));
+        return $this->render('AvesnesMedicalecommerceBundle:Index:menu.html.twig', array('categorie' => $categorie, 'form' => $form->createView() ));
     }
 
     public function connexionAction()
     {
         return $this->render('AvesnesMedicalecommerceBundle:Index:connexion.html.twig');
     }
+
+
 }

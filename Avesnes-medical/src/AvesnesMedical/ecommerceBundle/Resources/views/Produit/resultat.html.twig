@@ -1,0 +1,41 @@
+
+
+    <form class="form-search" id="form_recherche" action="{{ path('RechercheProduit') }}" method="POST">
+        <div class="input-append">
+            {% if form is defined %}
+                {{ form_widget(form.motcle) }}
+                <button class="btn btn-primary" name="search" type="submit">Recherche</button>
+            {% else %}
+                oula
+            {% endif %}
+
+        </div>
+    </form>
+
+
+    <div class="loading">loading ;-) </div>
+
+    <div id="resultats_recherche">
+        {% include 'AvesnesMedicalecommerceBundle:Produit:liste.html.twig' with {'produit' : produit}  %}
+    </div>
+
+
+    <script>
+    $(".loading").hide();
+    $("#form_recherche").submit(function(){
+        $(".loading").show();
+        var motcle = $("#produitrecherche_motcle").val();
+        var DATA = 'motcle=' + motcle;
+        $.ajax({
+            type: "POST",
+            url: "{{ path('RechercheProduit')}}",
+            data: DATA,
+            cache: false,
+            success: function(data){
+                $('#resultats_recherche').html(data);
+                $(".loading").hide();
+            }
+        });
+        return false;
+    });
+    </script>

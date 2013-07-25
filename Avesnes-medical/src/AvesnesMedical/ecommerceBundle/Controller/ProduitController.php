@@ -32,14 +32,12 @@ class ProduitController extends Controller
             ->getRepository('AvesnesMedicalecommerceBundle:Produit')
             ->getProduits(10, $page); // 3 articles par page
 
-        $form = $this->container->get('form.factory')->create(new RechercheType());
-
         if($produit === null)
         {
             echo 'Ce produit n\'éxiste pas';
         }
 
-        return $this->render('AvesnesMedicalecommerceBundle:Produit:index.html.twig', array('produit' => $produit, 'form' => $form->createView(), 'page'
+        return $this->render('AvesnesMedicalecommerceBundle:Produit:index.html.twig', array('produit' => $produit, 'page'
         => $page,'nombrePage' => ceil(count($produit)/5)));
     }
 
@@ -170,23 +168,15 @@ class ProduitController extends Controller
 
         $request = $this->container->get('request');
 
-
-        if($request->getMethod() == 'POST')
+        if($request->isXmlHttpRequest())
         {
             $em = $this->container->get('doctrine')->getEntityManager();
 
-            echo'rentre 1';
-
             $motcle = '';
-            $motcle = $this->getRequest()->request->get('produitrecherche');
-
-
-
-            echo $motcle['motcle'];
+            $motcle['motcle'] = $this->getRequest()->request->get('motcle');
 
             if($motcle['motcle'] != '')
             {
-                echo'rentre 2';
                 $qb = $em->createQueryBuilder();
 
                 $qb ->select('p')
@@ -200,18 +190,32 @@ class ProduitController extends Controller
             }
             else
             {
-                echo'rentre 3';
                 $produit = $em->getRepository('AvesnesMedicalecommerceBundle:Produit')->findAll();
             }
-//            \Doctrine\Common\Util\Debug::dump($produit);
-            return $this->render('AvesnesMedicalecommerceBundle:Produit:recherche.html.twig',
+            return $this->container->get('templating')->renderResponse('AvesnesMedicalecommerceBundle:Produit:resultat.html.twig',
                 array('produit' => $produit));
         }
         else
         {
-            echo'rentre 4';
-            $page = 1;
-            return $this->indexAction($page);
+            return $this->resultatAction();
         }
+    }
+
+    public function resultatAction()
+    {
+        // On récupère le repository de produit
+        $repository = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('AvesnesMedicalecommerceBundle:Produit');
+
+        // On récupère l'entité correspondant à l'id $id
+        $produit = $repository->findAll();
+
+
+        $form = $this->container->get('form.factory')->create(new RechercheType());
+
+        return $this->container->get('templating')->renderResponse('AvesnesMedicalecommerceBundle:Produit:resultat.html.twig',
+            array('produit' => $produit,'form' => $form->createView() ));
+
     }
 }

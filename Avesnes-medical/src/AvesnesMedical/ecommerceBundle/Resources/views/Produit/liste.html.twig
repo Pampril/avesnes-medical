@@ -1,0 +1,39 @@
+{% extends "AvesnesMedicalecommerceBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} Résultat de la recherche {% endblock %}
+
+{% block body %}
+
+    <table class="table table-bordered table-striped table-condensed">
+    <caption>
+        <h1>Résultat de la recherche :</h1>
+    </caption>
+    <thead>
+    <tr>
+        <th> Designation </th>
+        <th> ACL </th>
+        <th> EAN </th>
+        <th> Qté </th>
+        <th> Prix </th>
+        <th> Description </th>
+        <th> Photo du produit </th>
+        <th> Statut </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        {% for unProduit in produit %}
+            <td>{{ unProduit.nom }}</td>
+            <td>{{ unProduit.acl }}</td>
+            <td>{{ unProduit.ean }}</td>
+            <td>{{ unProduit.quantite }}</td>
+            <td>{{ unProduit.prix }}</td>
+            <td>{{ unProduit.description }}</td>
+            <td>{{ unProduit.ean }}</td>
+            <td>{{ unProduit.ean }}</td>
+    </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+
+{% endblock %}
